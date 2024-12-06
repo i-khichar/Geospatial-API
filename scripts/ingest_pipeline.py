@@ -64,7 +64,7 @@ def ingest_to_db(features):
 
         # Insert into the database
             sql = """
-            INSERT INTO geojson_data (fill, geom)
+            INSERT INTO geojson_data (fill, geometry)
             VALUES (%s, ST_GeomFromGeoJSON(%s));
             """
             cursor.execute(sql, (fill, geom))
