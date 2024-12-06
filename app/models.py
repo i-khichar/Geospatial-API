@@ -1,6 +1,10 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class GeoJSONFeature(BaseModel):
-    id: int
-    geometry: dict
-    properties: dict
+class FeatureCreate(BaseModel):
+    fill: str
+    geometry: str
+
+class FeaturePartialUpdate(BaseModel):
+    fill: Optional[str] = None
+    geometry: Optional[str] = None

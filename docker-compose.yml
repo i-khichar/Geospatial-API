@@ -1,9 +1,24 @@
 version: "3.9"
 
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-container
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+      - ./scripts:/scripts
+    environment:
+      - DATABASE_URL=postgresql://postgres:yourpassword@postgres:5432/karnataka_db
+    depends_on:
+      - postgres
+
   postgres:
     image: postgis/postgis
-    container_name: postgres
+    container_name: postgres-container
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -12,17 +27,5 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-
-  app:
-    build: .
-    container_name: fastapi
-    restart: always
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres
-
-volumes:
-  postgres_data:

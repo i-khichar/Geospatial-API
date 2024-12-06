@@ -1,17 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import Optional
 from app.crud import get_features, get_feature_by_id, create_feature, update_feature, delete_feature
+from app.models import FeatureCreate, FeaturePartialUpdate
 
 app = FastAPI()
-
-class FeatureCreate(BaseModel):
-    fill: str
-    geometry: str
-
-class FeaturePartialUpdate(BaseModel):
-    fill: Optional[str] = None
-    geometry: Optional[str] = None
 
 @app.get("/")
 def read_root():
