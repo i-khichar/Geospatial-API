@@ -58,21 +58,7 @@ def ingest_to_db(features):
     try:
         conn = psycopg2.connect(**DB_CONFIG)
         cursor = conn.cursor()
-
-        # # Prepare the data for execute_values
-        # values = [(feature["fill"], feature["geometry"]) for feature in features]
-
-        # # Use execute_values for batch insertion
-        # insert_query = """
-        #     INSERT INTO geo_data (fill, geometry)
-        #     VALUES %s
-        #     ON CONFLICT (id) DO NOTHING;
-        # """
-        # execute_values(cursor, insert_query, values)
-        count = 0
         for feature in features["features"]:
-            print(count)
-            count = count + 1
             geom = json.dumps(feature["geometry"])  # Convert geometry to GeoJSON string
             fill = feature["properties"].get("fill", "#000")  # Default to "#000" if not provided
 
